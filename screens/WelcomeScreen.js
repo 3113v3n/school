@@ -34,10 +34,7 @@ export default class HomeScreen extends React.Component {
 
   constructor(props){
     super(props)
-    this.state={
-      placeholderText: 'Enter your mobile number',
     
-    }
   }
 
 
@@ -185,13 +182,7 @@ decreaseHeightOfLogin=()=>{
               zIndex:100,//allow it to stay on top
               opacity:headerBackArrowOpacity
             }}>
-            <TouchableOpacity
-            onPress={()=>this.decreaseHeightOfLogin()}
-            >
-            
-              <Icon name="md-arrow-back"
-              style={{color:'black'}}/>
-              </TouchableOpacity>
+           
             </Animated.View>
 
             <Animated.View
@@ -208,21 +199,7 @@ decreaseHeightOfLogin=()=>{
               borderRadius:30
             }}
             >
-            <TouchableOpacity
-           /* 
-            onPress={(event)=>{
-              if(!this.state.mob.trim())
-              {return;
-              //do nothing,
-              }else{
-                this.props.navigation.navigate('home')
-              }
-            }}*/
-            onPress={()=>{{()=>this.keyboardWillHide()}
-            {this.props.navigation.navigate('home')}}}
-            >
-                <Icon name="md-arrow-forward" style={{color:'white'}}/>
-            </TouchableOpacity>
+           
               </Animated.View>
 
               <ImageBackground
@@ -230,7 +207,7 @@ decreaseHeightOfLogin=()=>{
               //style={styles.welcomeImage}
               style={{flex:1}}
               >
-                <View style={{flex:1, justifyContent:'center', alignItems:"center"}}>
+                <View style={{flex:1, justifyContent:'center', alignItems:"center",heigh:'80%'}}>
                   <Animatable.View 
                   animation="zoomIn" iterationCount={1}
                   style={{//backgroundColor:"white",
@@ -255,8 +232,9 @@ decreaseHeightOfLogin=()=>{
                 <Animatable.View animation="slideInUp" iterationCount={1}>
                   <Animated.View
                   style={{
-                    height:this.LoginHeight,
-                    backgroundColor:'white'
+                    height:"50%",
+                    backgroundColor:'white',
+                    alignItems:'flex-end'
 
                   }}>
                       <Animated.View style={{
@@ -265,76 +243,16 @@ decreaseHeightOfLogin=()=>{
                         paddingHorizontal:25,
                         marginTop:marginTop//initially 25 but we call method marginTop
                       }}>
+                      <TouchableOpacity
+           
+           onPress={()=>{
+           {this.props.navigation.navigate(' AuthLoading')}}}
+           >
                           <Text
                           style={{fontSize:24}}>Get Started
                           </Text>
-                        </Animated.View>
-                        <TouchableOpacity
-                        onPress={()=>this.increaseHeightOfLogin()}>
-                            <Animated.View
-                            style={{
-                              marginTop:marginTop,
-                              paddingHorizontal:25,
-                              flexDirection:'column'
-                            }}
-                            >
-                            <Animated.Text
-                            style={{fontSize:24,color:'gray',
-                            position:'absolute',
-                            bottom:titleTextBottom,
-                            left:titleTextLeft,
-                            opacity:titleTextOpacity
-                            }}
-                            
-                            >
-                            Enter your mobile number
-                            </Animated.Text>
-                            
-                            <Image
-                            source={require('../assets/images/gawa.jpg')}
-                            style={{
-                              height:24,
-                              width:24,
-                              resizeMode:'contain'//resize image
-                            }}
-                            />
-
-                            <Animated.View
-                            pointerEvents="none"
-                            style={{
-                              flexDirection:'row',
-                              flexGrow:1,
-                              //justifyContent:'space-between'
-                              borderBottomWidth:this.borderBottomWidth
-                            }}>
-                                <Text style={{
-                                  fontSize:20,
-                                  paddingHorizontal:8,
-                                  marginRight:5
-                                }}>+254</Text>
-                                
-                                <TextInput style={styles.inputBox} underlineColorAndroid='rgba(0,0,0,0)'
-                                        placeholder="Enter username"
-                                        keyboardType="email-address"
-                                       ref="textInputMobile"
-                                        blurOnSubmit={true}
-                                        clearButtonMode='while-editing'
-                                        placeholderTextColor="#ffffff"
-                                        enablesReturnKeyAutomatically={true}
-                                        onChangeText={(input)=>this.uname(input)}
-                                        value={this.state.input}
-                                        maxLength={50}
-                                        returnKeyType='next'
-                                       
-              
-                                 />
-                            </Animated.View>
-                            
-
-                            </Animated.View>
-                            </TouchableOpacity>
-                          
-                          
+                          </TouchableOpacity>
+                        </Animated.View>  
                     </Animated.View>
 
                    

@@ -37,9 +37,9 @@ getID=async ()=>{
    this.setState({u_id:ID})
  }
 
-    storeNatID=async(nationalId)=>{
+    storeNatID=async(nat_id)=>{
         try{
-          await AsyncStorage.setItem('NatID',nationalId);
+          await AsyncStorage.setItem('NatID',nat_id);
         console.log('nationalId was stored successfully')
         }catch(error){
           console.log("error storing ID");

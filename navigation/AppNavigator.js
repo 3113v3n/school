@@ -7,20 +7,19 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import AuthStackNavigator from '../screens/AuthStackNavigator'
 import UserBottomTab from './UserBottomTab';
 import GtaskerBottomTab from './GtaskerBottomTab';
+import ClockTimer from '../components/AppComponents/ClockTimer'
 import JobLists from '../screens/JobLists';
-import getTaskers from '../screens/getTaskers';
-import UserTaskHistory from '../screens/UserTaskHistory';
-
+import AddComponent from '../components/AddComponent';
 
 const RootNavigator = createSwitchNavigator({
-jobs: JobLists
-// UserTaskHistory//getTaskers,,
-  // AuthLoading: AuthLoadingScreen,
-  // Auth: AuthStackNavigator,
+//jobs: JobLists //ClockTimer
+  AuthLoading: AuthLoadingScreen,
+  Auth: AuthStackNavigator,
  
-  // UserScreen: UserBottomTab,
-  // GtaskerScreen: GtaskerBottomTab,
-  // Main: MainTabNavigator,
+  UserScreen: UserBottomTab,
+  GtaskerScreen: GtaskerBottomTab,
+  Main: MainTabNavigator,
+  //https://www.youtube.com/watch?v=rmOpBg5W1RU props
 });
 
 export default class AppNavigator extends React.Component{

@@ -33,31 +33,14 @@ import { Image,
           componentWillUnmount(){
             isMounted=false;
           }
-       
+          getID=async ()=>{
+            const ID = await AsyncStorage.getItem('userToken')
+           this.setState({userId:ID})
+         }
 
           fetchUserPost(){
-            //   this.getID()
-            //   .then((ID)=>{
-            //       let user={}
-            //       user.userId=ID
-            //     getTaskHistory(user)
-            //     .then((responseJson)=>{
-            //         this.setState({
-                //          isLoading:false,
-            //             myPost:responseJson,
-            //             refreshing:false
-            //         })
-            //      this.arrayholder= responseJson;
-            //     })
-            //     .catch((error)=>{
-            //         console.log(error)
-            //     })
-            //   })
-            //   .catch((error)=>{
-            //     console.log(error)
-            // })
-            
-            let user={}
+            this.getID().then(()=>{
+                let user={}
             user.userId = this.state.userId
             getTaskHistory(user)
             .then((responseJson)=>{
@@ -71,10 +54,14 @@ import { Image,
                     .catch((error)=>{
                         console.log(error)
                     })
+            })
+         
+            
           }
           setSearchText=filterText=>{
             const newData1 = this.arrayholder.filter(item=>{
                 const itemData = `${item.description.toUpperCase()} 
+                ${item.task_name.toUpperCase()} 
                 ${item.location.toUpperCase()}`;
      
                 const textData = filterText.toUpperCase();

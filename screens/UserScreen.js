@@ -1,16 +1,13 @@
 import React from 'react';
 import {
-  Image,Platform,
-  ScrollView,StyleSheet,Text,TouchableOpacity,
-  TouchableHighlight,View,TextInput,KeyboardAvoidingView,
+  Image,StyleSheet,Text,TouchableOpacity,
+  View,TextInput,KeyboardAvoidingView,
   StatusBar,AsyncStorage
 } from 'react-native';
 
-
-import Button from 'react-native-button';
-
+import * as Animatable from 'react-native-animatable'
 import {registerUsers} from '../networking/server';
-import Dropdown from '../components/Dropdown';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 //const USER_ID = 'user_id';
@@ -158,6 +155,26 @@ submitGtasker(){
     
 
       <View style={{position:'absolute',width:100+'%',height:100+'%',zIndex:10,alignItems:'center'}}>
+
+                <Animatable.View 
+                  animation="zoomIn" iterationCount={1}
+                  style={{//backgroundColor:"white",
+                  height:100, width:100,alignItems:'center',
+                  borderRadius:50,
+                justifyContent:'center'}}>
+                      <Image
+                          source={
+                            __DEV__
+                              ? require('../assets/images/gawa.jpg')
+                              : require('../assets/images/gawa.jpg')
+                          }
+                          style={styles.welcomeImage}
+                      />
+                      <Text style={{fontWeight:'bold',
+                      fontSize:26,
+                    alignItems:'center'}}
+                      > </Text>
+                  </Animatable.View>
       <View style={{ alignItems:'center',padding:10,justifyContent:'flex-end',flexGrow:1,width:100+'%',marginBottom:20  }}>
 
 
@@ -177,6 +194,8 @@ submitGtasker(){
             returnKeyType='next'
             onSubmitEditing={()=>this._number.focus()}
            />
+         
+
               <TextInput 
                     ref={(input)=>this._number=input}//keyboard to pop up on click
                     style={styles.inputBox}
@@ -257,6 +276,16 @@ buttonText:{
   fontWeight:'bold',
   fontSize:16,
  
+},
+welcomeImage: {
+  width: 80,
+  height: 80,
+  resizeMode: 'contain',
+  marginTop: 15,
+  marginLeft: -10,
+  alignItems:'center',
+  paddingTop:20,
+  borderRadius:40
 },
 
 });

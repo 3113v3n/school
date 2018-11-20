@@ -15,7 +15,9 @@ const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
 import {_claimTask} from '../networking/server';
 const { width } = Dimensions.get('window');
 import StarRating from 'react-native-star-rating';
-export default class JobLists extends React.PureComponent {     //pure!
+import ClockTimer from '../components/AppComponents/ClockTimer'
+
+ class JobLists extends React.PureComponent {     //pure!
 
     constructor(props){
         super(props);
@@ -29,10 +31,10 @@ export default class JobLists extends React.PureComponent {     //pure!
              empty:false,
              post_id:'48',//fetch post id
 
-             show: false,
-             touchable: null,
-             isModalVisible:false,
-           idNumber:'32572242'//fetch nat id
+           idNumber:'32572242',//fetch nat id
+           show: false,
+           touchable: null,
+           isModalVisible:false,
 
         }
       
@@ -42,8 +44,8 @@ export default class JobLists extends React.PureComponent {     //pure!
       
          isMounted= true ;
          if(isMounted=true){
-            // this.getAllTasks()
-            this.refreshDataFromServer();
+            // this.getAllTasks().then(()=>{this.setState({refreshing:false});})
+           this.refreshDataFromServer();
             
          }else{
              console.log('error mounting')
@@ -53,7 +55,11 @@ export default class JobLists extends React.PureComponent {     //pure!
     
     isMounted=false;
     }
-   
+    getNatID=async ()=>{
+        myID= await AsyncStorage.getItem('NatID');
+        this.setState({idNumber:myID})
+      }
+
     setSearchText=filterText=>{
        const newData1 = this.arrayholder.filter(item=>{
            const itemData = `${item.description.toUpperCase()} 
@@ -64,6 +70,8 @@ export default class JobLists extends React.PureComponent {     //pure!
        });
        this.setState({TasksFromServer:newData1});
     } ;
+
+  
 
     getAllTasks() {
        
@@ -90,9 +98,12 @@ export default class JobLists extends React.PureComponent {     //pure!
     }
     refreshDataFromServer = _.debounce(() => {
         this.setState({ refreshing: true, });
-       this.getAllTasks().then(()=>{
-           this.setState({refreshing:false});
-       })
+        this.getNatID().then(()=>{
+            this.getAllTasks().then(()=>{
+                this.setState({refreshing:false});
+            })
+        })
+       
    },250);
      
       refreshFlatList=() =>{
@@ -144,74 +155,79 @@ renderSeparator=()=>{
        }
        
     render(){
-       
-        let jobList=this.state.TasksFromServer.map((val,key)=>{
-            return (
-
-                 
-                <Swipeable>
-                <List containerStyle={{borderTopWidth:0, borderBottomWidth:0}}>
-                    <FlatList
-                    data={this.state.TasksFromServer}
-                    renderItem={({item, index})=>(
-                        
-                        
-                        <ListItem item={item} index={index}
-                      
-                            roundAvatar
-                            avatar={
-                                <View style={{
-                                    //flex:1,
-                                    marginTop:2,
-                                    marginLeft:10,
-                                  flexDirection:'row',elevation:1,shadowOpacity:1,shadowColor:'gray', backgroundColor:'white' 
-                                 }}>
-                                    <Image
-                                    source={
-                                    item.task_name==='general cleaning' ? require('../assets/images/home_cleaning.jpg'):
-                                    item.task_name ==='delivery'? require('../assets/images/deliveryServices.jpg'):
-                                    item.task_name==='baby sitting' ? require('../assets/images/baby.jpg'):
-                                    item.task_name==='laundry' ? require('../assets/images/laundryIcon.jpg'):
-                                    item.task_name==='movers' ? require('../assets/images/moving.jpeg'):
-                                    require('../assets/images/Plumbing.jpg')
-                                    }
-                                    style={{width:80, height:80, borderRadius:40}}
-                                    />
-                                </View>
-                            }
-                           title={item.task_name}  
-                           titleStyle={{fontWeight:'bold'}}
-                           subtitle={<View style={styles.subtitleView}>
-                           <Text >{item.description}</Text>
-                           <Text style={{paddingTop:5,fontWeight:'400'}}>location: {item.location}</Text>
-                           <Text style={{fontWeight:'bold'}}>ksh: {item.amount}</Text>
-                       </View>}
-                            containerStyle={{borderBottomWidth:0}}
-                            onPress={this.handleItemPressed.bind(this) }
-                           hideChevron
-                         
-                        />
-                       
-                       
-                    )}
+            if(this.state.isLoading){
+                return(
+                    <View style={styles.container1}>
+                    <View style={{marginTop:30,alignItems:"center"}}>
+                        <Text style={{fontWeight:'bold',fontSize:16}}>
+                            FETCHING TASKS PLEASE WAIT
+                        </Text>
+                    </View>
+                        <ActivityIndicator />
+                    </View>
+                )
+            }else{
+                return (
+                    <Swipeable>
+                    <List containerStyle={{borderTopWidth:0, borderBottomWidth:0}}>
+                        <FlatList
+                        data={this.state.TasksFromServer}
+                        renderItem={({item, index})=>(
+                            
                     
-                    keyExtractor={(item) => item.location}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.refreshing}       
-                            onRefresh={this.onRefresh}
+                            <ListItem item={item} index={index}
+                          
+                                roundAvatar
+                                avatar={
+                                    <View style={{
+                                        marginTop:2,
+                                        marginLeft:10,
+                                      flexDirection:'row',elevation:1,shadowOpacity:1,shadowColor:'gray', backgroundColor:'white' 
+                                     }}>
+                                        <Image
+                                        source={
+                                        item.task_name==='general cleaning' ? require('../assets/images/home_cleaning.jpg'):
+                                        item.task_name ==='delivery'? require('../assets/images/deliveryServices.jpg'):
+                                        item.task_name==='baby sitting' ? require('../assets/images/baby.jpg'):
+                                        item.task_name==='laundry' ? require('../assets/images/laundryIcon.jpg'):
+                                        item.task_name==='movers' ? require('../assets/images/moving.jpeg'):
+                                        require('../assets/images/Plumbing.jpg')
+                                        }
+                                        style={{width:80, height:80, borderRadius:40}}
+                                        />
+                                    </View>
+                                }
+                               title={item.task_name}  
+                               titleStyle={{fontWeight:'bold'}}
+                               subtitle={<View style={styles.subtitleView}>
+                               <Text >{item.description}</Text>
+                               <Text style={{paddingTop:5,fontWeight:'400'}}>location: {item.location}</Text>
+                               <Text style={{fontWeight:'700'}}>ksh: {item.amount}</Text>
+                               <ClockTimer deadline={item.end_date}
+                               />
+                           </View>}
+                                containerStyle={{borderBottomWidth:0}}
+                                onPress={this.handleItemPressed.bind(this) }
+                               hideChevron
+                             
+                            />
+                           
+                           
+                        )}
+                        
+                        keyExtractor={(item) => item.location}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}       
+                                onRefresh={this.onRefresh}
+                            />
+                        }
+                        ItemSeparatorComponent={this.renderSeparator}
+                        ListHeaderComponent={this.renderHeader}
+                        ListFooterComponent={this.renderFooter}
                         />
-                    }
-                    ItemSeparatorComponent={this.renderSeparator}
-                    ListHeaderComponent={this.renderHeader}
-                    ListFooterComponent={this.renderFooter}
-                    />
-                    
-               
-                </List> 
-                
-                <Modal 
-         
+                        <Modal 
+             
              onBackdropPress={()=>this.setState({isModalVisible:false})}
               style={styles.modal}
              isVisible={this.state.isModalVisible}>
@@ -223,15 +239,15 @@ renderSeparator=()=>{
                     <Image style={{width:100,height:80+'%',borderRadius:4}} source={require('../assets/images/Johnny.jpg')}/>
                     <Right style={{flex:1,alignItems:'flex-start',height:200,padding:20}}>
                         <Text style={{fontWeight:'bold',fontSize:16}}>Job</Text>
-                        <Text >name: task name </Text>
-                        <Text style={{color:'gray'}}>location:task location</Text>
-                        <Text style={{color:'gray'}}>amount:task Amount</Text>
-                        <Text style={{color:'gray'}}>Start Date: Start Dat3</Text>
+                        <Text >name:  </Text>
+                        <Text style={{color:'gray'}}>location:</Text>
+                        <Text style={{color:'gray'}}>amount:</Text>
+                        <Text style={{color:'gray'}}>Start Date: </Text>
                     </Right>
                     </CardItem>
                 
                     <View style={{alignItems:'flex-start',justifyContent:'flex-start',padding:10,paddingTop:5}}>
-
+ 
                         <Text style={{fontWeight:'bold'}}>About Task</Text>
                         <Text> i need my job description written here........</Text>
                        
@@ -269,34 +285,18 @@ renderSeparator=()=>{
                 }}
                     containerStyle={{ marginTop: 20 }}
                     title='Bid'/>
-
+ 
                    </View>
                   </View>
-
+ 
           </View>
         </Modal>
-          
-         
-               </Swipeable>
-
-            );
-        })
-
-
-            if(this.state.isLoading){
-                return(
-                    <View style={styles.container1}>
-                    <View style={{marginTop:30,alignItems:"center"}}>
-                        <Text style={{fontWeight:'bold',fontSize:16}}>
-                            FETCHING TASKS PLEASE WAIT
-                        </Text>
-                    </View>
-                        <ActivityIndicator />
-                    </View>
-                )
-            }else{
-                return (
-               [jobList]
+           
+                   
+                    </List> 
+                    
+                   </Swipeable>
+    
                 
                 );
             }      
@@ -304,6 +304,9 @@ renderSeparator=()=>{
     } 
     
 }
+
+
+export default JobLists;
 const styles=StyleSheet.create({
     container1:{
         flex:1,

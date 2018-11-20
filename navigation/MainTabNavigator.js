@@ -5,8 +5,8 @@ import UserBottomTab from '../navigation/UserBottomTab';
 
 import calendar from '../components/calendar';
 import UserSchedule from '../components/UserSchedule';
-import Start_Stop_Session from '../components/Start_Stop_Session';
-import MapView from '../components/profileTab/MapView';
+
+import MapView from '../components/AppComponents/MapView';
 import AuthLoadingscreen from '../screens/AuthLoadingScreen';
 import AddComponent from '../components/AddComponent';
 import GtaskerBottomTab from '../navigation/GtaskerBottomTab';

@@ -26,7 +26,7 @@ var screen = Dimensions.get('window');
     constructor(props){
         super(props);
         this.state={
-         u_id:'',
+         u_id:'45',
           newTaskDesc:"",
           newAmount:"",
           newLocation:"",
@@ -34,30 +34,23 @@ var screen = Dimensions.get('window');
           end_date:"",
           PickerIndex:[],
           isVisible:false,
-          chosenStartDate:'',
+          chosenStartDate:moment().format("LLL"),//YYYY-MMMM-Do HH:mm
           chosenEndDate:''
           
          
         }
     }
     componentWillMount(){
-        this.fetchID = this.getID();
+        this.fetchID = this.getID(); //_-REMOVE
     }
     componentWillUnmount(){
         this.fetchID
     }
 
-   
-    _handleDatePicked=(datetime)=>{
-        this.setState({
-            isVisible:false,
-            chosenStartDate:moment(datetime).format('YYYY-MMMM-Do HH:mm')
-        })
-    }
     _handleEndDatePicked=(datetime)=>{
         this.setState({
             isVisible:false,
-            chosenEndDate:moment(datetime).format('YYYY-MMMM-Do HH:mm')
+            chosenEndDate:moment(datetime).format('LLL')
         })
     }
     _showPicker=()=>{
@@ -74,6 +67,7 @@ var screen = Dimensions.get('window');
    
     getID=async ()=>{
         const ID = await AsyncStorage.getItem('userToken')
+        console.log(ID)
         this.setState({
             u_id:ID
         })
@@ -116,11 +110,19 @@ var screen = Dimensions.get('window');
        AddNewTask(tasks).then((status)=>{
             
                if(status==0){
+                //    this.setState({
+                //        u_id:'',
+                //        PickerIndex:[],
+                //        newLocation:'',
+                //        newAmount:'',
+                //        chosenStartDate:'',
+                //        chosenEndDate:''
+                //    })
                 this.nav();
                }
            
        }) 
-         //this.nav();
+      
 
     }
    
@@ -128,6 +130,12 @@ var screen = Dimensions.get('window');
        this.props.navigation.navigate('back');
     }
     render(){
+        setTimeout(()=>{
+            this.setState({
+                chosenStartDate:moment().format("LLL"),
+            
+            })
+        },1000)
         
         return(
             <View behavior='padding' style={{flex:1,padding:0}}>
@@ -165,7 +173,7 @@ var screen = Dimensions.get('window');
 
                 <TextInput style={styles.inputBox}
                 underlineColorAndroid='transparent'
-               // onSubmitEditing={()=>this._location.focus()}
+               onSubmitEditing={()=>this._location.focus()}
                 keyboardType="email-address"
                 placeholder="*Enter task description:"
                 multiline={true}
@@ -182,7 +190,7 @@ var screen = Dimensions.get('window');
               <TextInput style={styles.inputBox}
 
                 underlineColorAndroid='transparent'
-                //onSubmitEditing={()=>this.amount.focus()}
+                onSubmitEditing={()=>this.amount.focus()}
                 keyboardType="email-address"
                 placeholder=" *task Location:"
                 ref={(input)=>this._location=input}
@@ -210,24 +218,9 @@ var screen = Dimensions.get('window');
                 placeholderTextColor="#000000"
                 enablesReturnKeyAutomatically={true}
                 maxLength={250}
-                onSubmitEditing={()=>this.start.focus()}
-                />
-                <Text style={{
-                 color:'red',fontSize:15
-                 }}>
-             {this.state.chosenStartDate}</Text>
              
-               <TouchableOpacity style={styles.button} onPress={this._showPicker}>
-                 <Text style={styles.text}>Set Start day</Text>
-             </TouchableOpacity>
-                 <DateTimePicker
-                 isVisible={this.state.isVisible}
-                 onConfirm={this._handleDatePicked}
-                 onCancel={this._hideDateTimePicked}
-                 mode={'datetime'}
-                 is24Hour={true}
-                 />
-
+                />
+                
                   <Text style={{
                  color:'red',fontSize:15
              }}>
