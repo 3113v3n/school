@@ -68,7 +68,17 @@ class DaysTimer extends Component{
         this.getTimeUntil(this.props.deadline)//state
     }
     componentDidMount(){
-        setInterval(()=>this.getTimeUntil(this.props.deadline),1000)
+      this.interval=  setInterval(()=>this.getTimeUntil(this.props.deadline),1000)
+    }
+
+    componentDidUpdate(){
+        if (this.state.days === 0 
+            && this.state.hours === 0 
+            && this.state.minutes === 0 
+            && this.state.seconds === 0 ){
+                   clearInterval(this.interval)
+          
+        }
     }
     leading0(num){
         //insert a 0 to the number if its less than 10 i.e 05

@@ -4,9 +4,28 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 import TabBarIcon from '../components/TabBarIcon';
 import JobLists from '../screens/JobLists';
 import gtaskerHome from '../screens/gtaskerHome';
-
+import { createStackNavigator} from 'react-navigation';
 import GprofileScreen from '../screens/GprofileScreen';
+import TaskDetails from '../screens/TaskDetails';
 
+export const feedStack= createStackNavigator({
+  Feed:{
+    screen:JobLists,
+    navigationOptions:{
+      tabBarLabel: 'Tasks',
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon
+          focused={focused}
+          name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+        />
+      ),
+    }
+  },
+  Details:TaskDetails,
+  navigationOptions:{
+    title:({state})=>`${state.params.task_name.toUpperCase()}`
+  }
+})
 
 export default GtaskerTabNavigator = new createMaterialBottomTabNavigator({
     HomeScreen:{
@@ -23,16 +42,8 @@ export default GtaskerTabNavigator = new createMaterialBottomTabNavigator({
             }
     },
     LinksScreen:{
-        screen: JobLists,
-        navigationOptions:{
-            tabBarLabel: 'Tasks',
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon
-                focused={focused}
-                name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
-              />
-            ),
-          }
+        screen: feedStack,
+        
     },
     SettingsScreen:{
         screen:GprofileScreen,

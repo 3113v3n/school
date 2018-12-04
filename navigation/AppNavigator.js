@@ -9,17 +9,18 @@ import UserBottomTab from './UserBottomTab';
 import GtaskerBottomTab from './GtaskerBottomTab';
 import ClockTimer from '../components/AppComponents/ClockTimer'
 import JobLists from '../screens/JobLists';
-import AddComponent from '../components/AddComponent';
+import getTaskers from '../screens/getTaskers'
 
 const RootNavigator = createSwitchNavigator({
-//jobs: JobLists //ClockTimer
-  AuthLoading: AuthLoadingScreen,
-  Auth: AuthStackNavigator,
+//jobs: JobLists,//getTaskers //ClockTimer
+  // AuthLoading: AuthLoadingScreen,
+  // Auth: AuthStackNavigator,
  
-  UserScreen: UserBottomTab,
-  GtaskerScreen: GtaskerBottomTab,
-  Main: MainTabNavigator,
+  // UserScreen: UserBottomTab,
+   GtaskerScreen: GtaskerBottomTab,
+   Main: MainTabNavigator,
   //https://www.youtube.com/watch?v=rmOpBg5W1RU props
+  //https://www.youtube.com/watch?v=C96piR3FRww
 });
 
 export default class AppNavigator extends React.Component{

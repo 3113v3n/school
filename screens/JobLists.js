@@ -1,23 +1,21 @@
 
-import React  from 'react';
+import React,{Component}  from 'react';
 import {FlatList, StyleSheet,View,Text,
     ActivityIndicator
     ,RefreshControl ,
     AsyncStorage,
-    Image,ScrollView,Dimensions,Button
+    Image,
+
 } from 'react-native';
-import Modal from "react-native-modal";
+
 import _ from 'lodash';
 import {SearchBar,List,ListItem} from "react-native-elements";
-import {Right,Card,CardItem} from 'native-base';
-import Swipeable from 'react-native-swipeable';
 const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
-import {_claimTask} from '../networking/server';
-const { width } = Dimensions.get('window');
-import StarRating from 'react-native-star-rating';
 import ClockTimer from '../components/AppComponents/ClockTimer'
+import TaskModal from '../components/modals/TaskModal'
 
- class JobLists extends React.PureComponent {     //pure!
+//const numColumns=2;
+ class JobLists extends Component {     //pure!
 
     constructor(props){
         super(props);
@@ -31,25 +29,33 @@ import ClockTimer from '../components/AppComponents/ClockTimer'
              empty:false,
              post_id:'48',//fetch post id
 
-           idNumber:'32572242',//fetch nat id
-           show: false,
-           touchable: null,
-           isModalVisible:false,
-
+           idNumber:'32571242',//fetch nat id
+  
         }
       
         this.arrayholder=[] ;
     } 
+  
     componentDidMount(){
       
          isMounted= true ;
          if(isMounted=true){
-            // this.getAllTasks().then(()=>{this.setState({refreshing:false});})
-           this.refreshDataFromServer();
+            this.getAllTasks().then(()=>{this.setState({refreshing:false});})
+           //this.refreshDataFromServer();
             
          }else{
              console.log('error mounting')
          }
+    }
+    
+    handlepress=()=>{
+     
+  this.refs.Mymodal.showModal()
+           
+    }
+    learnMore=(item)=>{
+        console.log('you pressed me and I am relaying the following',item)
+        this.props.navigation.navigate('Details', {...item});
     }
     componentWillUnmount(){
     
@@ -108,14 +114,15 @@ import ClockTimer from '../components/AppComponents/ClockTimer'
      
       refreshFlatList=() =>{
     
-        this.refs.flatList.scrollToEnd();
+        this.refs.joblists.scrollToEnd();
       }
       
       onRefresh = () => {
         this.refreshDataFromServer();
+        this.refreshFlatList();
     }
 
-
+   
 
 renderSeparator=()=>{
     return(
@@ -128,11 +135,7 @@ renderSeparator=()=>{
         }}/>
     );
 }
-      
-        handleItemPressed=()=>{
-        
-            this.setState({ isModalVisible: !this.state.isModalVisible });
-        }
+
        renderHeader=()=>{
            return(
            <SearchBar placeholder="Search task..."
@@ -168,9 +171,12 @@ renderSeparator=()=>{
                 )
             }else{
                 return (
-                    <Swipeable>
+                    <View>
+                        
                     <List containerStyle={{borderTopWidth:0, borderBottomWidth:0}}>
                         <FlatList
+                       // numColumns={numColumns}
+                        ref={'joblists'}
                         data={this.state.TasksFromServer}
                         renderItem={({item, index})=>(
                             
@@ -197,19 +203,19 @@ renderSeparator=()=>{
                                         />
                                     </View>
                                 }
-                               title={item.task_name}  
+                               title={item.task_name.toUpperCase()}  
                                titleStyle={{fontWeight:'bold'}}
                                subtitle={<View style={styles.subtitleView}>
                                <Text >{item.description}</Text>
-                               <Text style={{paddingTop:5,fontWeight:'400'}}>location: {item.location}</Text>
+                               <Text style={{paddingTop:5,fontWeight:'400'}}>location: {item.location.toUpperCase()}</Text>
                                <Text style={{fontWeight:'700'}}>ksh: {item.amount}</Text>
                                <ClockTimer deadline={item.end_date}
                                />
                            </View>}
                                 containerStyle={{borderBottomWidth:0}}
-                                onPress={this.handleItemPressed.bind(this) }
+                                onPress={()=>this.learnMore(item)}
                                hideChevron
-                             
+                             ////this.handlepress.bind(this)
                             />
                            
                            
@@ -226,77 +232,17 @@ renderSeparator=()=>{
                         ListHeaderComponent={this.renderHeader}
                         ListFooterComponent={this.renderFooter}
                         />
-                        <Modal 
-             
-             onBackdropPress={()=>this.setState({isModalVisible:false})}
-              style={styles.modal}
-             isVisible={this.state.isModalVisible}>
-          <View style={{ flex: 1,alignItems:'flex-end' }}>
-        
-          <ScrollView>
-                            
-                    <CardItem style={{height:200,width:100+'%'}}>
-                    <Image style={{width:100,height:80+'%',borderRadius:4}} source={require('../assets/images/Johnny.jpg')}/>
-                    <Right style={{flex:1,alignItems:'flex-start',height:200,padding:20}}>
-                        <Text style={{fontWeight:'bold',fontSize:16}}>Job</Text>
-                        <Text >name:  </Text>
-                        <Text style={{color:'gray'}}>location:</Text>
-                        <Text style={{color:'gray'}}>amount:</Text>
-                        <Text style={{color:'gray'}}>Start Date: </Text>
-                    </Right>
-                    </CardItem>
-                
-                    <View style={{alignItems:'flex-start',justifyContent:'flex-start',padding:10,paddingTop:5}}>
- 
-                        <Text style={{fontWeight:'bold'}}>About Task</Text>
-                        <Text> i need my job description written here........</Text>
-                       
-                    </View>
-          </ScrollView>
-  
-                    <View style={{width:width}}>
-                    <View style={{height:50,padding:5}}>
-             
-                     <Text style={{fontWeight:'bold',color:'red'}}></Text></View>
-                     
-                
-                    <View style={{width:250,height:50,padding:10,position:'absolute',right:0,alignItems:'flex-end'}}>
-                  
-                <Button style={{backgroundColor:'#b71540',color:'#ffffff',fontWeight:'bold'}} 
-                    color='#b71540'
-                     buttonStyle={{
-                      backgroundColor: "#b71540",
-                      width: 300,
-                      height: 45,
-                      borderColor: "transparent",
-                      borderWidth: 0,
-                      borderRadius: 5
-                    }}
-                    onPress={()=>{{
-                        let task={}
-                        task.post_id=this.state.post_id
-                        task.nat_id=this.state.idNumber
-                        _claimTask(task).then((status)=>{
-                            if(status==0){
-                                Alert.alert('task claimed');
-                            this.props.navigation.navigate('myHome')}
-                        })}
-                
-                }}
-                    containerStyle={{ marginTop: 20 }}
-                    title='Bid'/>
- 
-                   </View>
-                  </View>
- 
-          </View>
-        </Modal>
-           
-                   
-                    </List> 
-                    
-                   </Swipeable>
     
+                  
+                    </List> 
+                    <TaskModal
+                        ref={'Mymodal'} 
+                   parentFlatlist={this}
+                        />
+                
+                  
+             </View> 
+            
                 
                 );
             }      
@@ -304,7 +250,7 @@ renderSeparator=()=>{
     } 
     
 }
-
+ 
 
 export default JobLists;
 const styles=StyleSheet.create({
@@ -335,38 +281,18 @@ const styles=StyleSheet.create({
         justifyContent:'center'
         
       },
-      flatListItem:{
-        color:'black',
-        fontSize: 12,
-       // flexWrap: 'wrap',
-        paddingVertical:5
-      },
+     
       fontSize:{
         fontWeight:'bold',
         flexWrap:'wrap',
         flexGrow: 1,
         flex:1
       },
-      modal: {
-        margin: 0, 
-        backgroundColor: 'white', 
-        height:350,
-        flex:0 , 
-        bottom: 0, 
-        position: 'absolute',
-        width: '100%'
-      },
-    card:{
-        
-        width:width * 0.48,
-        height:width * 0.68,
-        elevation   : 4,
-        borderRadius:8,
-        overflow:"hidden",
-    }, subtitleView: {
+    
+     subtitleView: {
         flexDirection: 'column',
         paddingLeft: 10,
         paddingTop: 5
-      },
-
+      }
+    
 })

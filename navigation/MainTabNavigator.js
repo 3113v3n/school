@@ -15,9 +15,9 @@ import UserTaskHistory from '../screens/UserTaskHistory';
 
 
 
-export default  createStackNavigator({
-//   welcome:WelcomeScreen,
 
+export default createStackNavigator({
+//   welcome:WelcomeScreen,
 
 myHome:GtaskerBottomTab,
  maps: MapView,
@@ -35,3 +35,4 @@ navigationOptions:{
   gesturesEnabled:false
 }
 })
+ 
