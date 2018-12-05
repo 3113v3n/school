@@ -5,6 +5,22 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import getTaskers from '../screens/getTaskers';
+import { createStackNavigator} from 'react-navigation';
+import UserDetails from '../screens/UserDetails';
+
+export const userFeedStack = createStackNavigator({
+
+feed:{
+    screen:getTaskers
+  
+},
+UserDetails:{
+    screen:UserDetails,
+    navigationOptions:{
+        title:'Tasker Details'
+    }
+},
+})
  
 export default UserBottomTab = new createMaterialBottomTabNavigator({
     SettingsScreen:{
@@ -22,7 +38,7 @@ export default UserBottomTab = new createMaterialBottomTabNavigator({
           }
     },
     TaskerScreen:{
-        screen: getTaskers,
+        screen: userFeedStack,
         navigationOptions:{
             tabBarLabel:'List',
             tabBarIcon:({focused})=>(

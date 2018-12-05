@@ -11,20 +11,14 @@ import TaskDetails from '../screens/TaskDetails';
 export const feedStack= createStackNavigator({
   Feed:{
     screen:JobLists,
-    navigationOptions:{
-      tabBarLabel: 'Tasks',
-      tabBarIcon: ({ focused }) => (
-        <TabBarIcon
-          focused={focused}
-          name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
-        />
-      ),
-    }
+
   },
-  Details:TaskDetails,
+  Details:{
+    screen:TaskDetails,
   navigationOptions:{
-    title:({state})=>`${state.params.task_name.toUpperCase()}`
+    title:'details'//({state})=>`${state.params.task_name.toUpperCase()}`
   }
+}
 })
 
 export default GtaskerTabNavigator = new createMaterialBottomTabNavigator({
@@ -43,7 +37,15 @@ export default GtaskerTabNavigator = new createMaterialBottomTabNavigator({
     },
     LinksScreen:{
         screen: feedStack,
-        
+        navigationOptions:{
+          tabBarLabel: 'Tasks',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon
+              focused={focused}
+              name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+            />
+          ),
+        }
     },
     SettingsScreen:{
         screen:GprofileScreen,

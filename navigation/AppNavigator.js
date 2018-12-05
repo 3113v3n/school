@@ -7,16 +7,16 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import AuthStackNavigator from '../screens/AuthStackNavigator'
 import UserBottomTab from './UserBottomTab';
 import GtaskerBottomTab from './GtaskerBottomTab';
-import ClockTimer from '../components/AppComponents/ClockTimer'
+
 import JobLists from '../screens/JobLists';
 import getTaskers from '../screens/getTaskers'
 
 const RootNavigator = createSwitchNavigator({
-//jobs: JobLists,//getTaskers //ClockTimer
-  // AuthLoading: AuthLoadingScreen,
-  // Auth: AuthStackNavigator,
+//qjobs: getTaskers //ClockTimer
+  AuthLoading: AuthLoadingScreen,
+  Auth: AuthStackNavigator,
  
-  // UserScreen: UserBottomTab,
+   UserScreen: UserBottomTab,
    GtaskerScreen: GtaskerBottomTab,
    Main: MainTabNavigator,
   //https://www.youtube.com/watch?v=rmOpBg5W1RU props

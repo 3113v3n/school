@@ -11,8 +11,8 @@ import {FlatList, StyleSheet,View,Text,
 import _ from 'lodash';
 import {SearchBar,List,ListItem} from "react-native-elements";
 const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
-import ClockTimer from '../components/AppComponents/ClockTimer'
-import TaskModal from '../components/modals/TaskModal'
+
+
 
 //const numColumns=2;
  class JobLists extends Component {     //pure!
@@ -27,8 +27,7 @@ import TaskModal from '../components/modals/TaskModal'
              TasksFromServer: [],
              filterText:'',
              empty:false,
-             post_id:'48',//fetch post id
-
+           
            idNumber:'32571242',//fetch nat id
   
         }
@@ -48,14 +47,11 @@ import TaskModal from '../components/modals/TaskModal'
          }
     }
     
-    handlepress=()=>{
-     
-  this.refs.Mymodal.showModal()
-           
-    }
+ 
     learnMore=(item)=>{
-        console.log('you pressed me and I am relaying the following',item)
-        this.props.navigation.navigate('Details', {...item});
+        let idNumber=this.state.idNumber
+        console.log('you pressed me and I am relaying the following',idNumber)
+        this.props.navigation.navigate('Details', {...item},idNumber);
     }
     componentWillUnmount(){
     
@@ -68,8 +64,7 @@ import TaskModal from '../components/modals/TaskModal'
 
     setSearchText=filterText=>{
        const newData1 = this.arrayholder.filter(item=>{
-           const itemData = `${item.description.toUpperCase()} 
-           ${item.location.toUpperCase()} ${item.task_name.toUpperCase()}`;
+           const itemData = `${item.location.toUpperCase()} ${item.task_name.toUpperCase()}`;
 
            const textData = filterText.toUpperCase();
            return itemData.indexOf(textData) >-1;
@@ -206,11 +201,9 @@ renderSeparator=()=>{
                                title={item.task_name.toUpperCase()}  
                                titleStyle={{fontWeight:'bold'}}
                                subtitle={<View style={styles.subtitleView}>
-                               <Text >{item.description}</Text>
-                               <Text style={{paddingTop:5,fontWeight:'400'}}>location: {item.location.toUpperCase()}</Text>
-                               <Text style={{fontWeight:'700'}}>ksh: {item.amount}</Text>
-                               <ClockTimer deadline={item.end_date}
-                               />
+                               <Text style={{paddingTop:5,fontWeight:'bold'}}>location: {item.location.toUpperCase()}</Text>
+                               <Text style={{paddingTop:5,fontWeight:'bold'}}>Amount: {item.amount}</Text>
+                               
                            </View>}
                                 containerStyle={{borderBottomWidth:0}}
                                 onPress={()=>this.learnMore(item)}
@@ -235,12 +228,7 @@ renderSeparator=()=>{
     
                   
                     </List> 
-                    <TaskModal
-                        ref={'Mymodal'} 
-                   parentFlatlist={this}
-                        />
-                
-                  
+             
              </View> 
             
                 

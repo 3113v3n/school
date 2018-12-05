@@ -1,19 +1,19 @@
 
-import React,{Component} from 'react';
+import React from 'react';
 import { 
      FlatList,StyleSheet,View,Text,ActivityIndicator,RefreshControl,
-     TouchableHighlight,Image,ScrollView,Dimensions,Button } from 'react-native';
+    Image,ScrollView,Dimensions,Button } from 'react-native';
 import Modal from "react-native-modal";
 import _ from 'lodash';
-import {SearchBar,List,ListItem,Tooltip} from "react-native-elements";
-import {Header,Container,Body,Content,Left,Right,Card,CardItem, Item, Input} from 'native-base';
+import {SearchBar,List,ListItem} from "react-native-elements";
+
 import { bold } from 'ansi-colors';
 import Swipeable from 'react-native-swipeable';
 
 const  apiGetUsers='https://gawatask-app.herokuapp.com/all-gtaskers.php';
 const { width } = Dimensions.get('window');
-import Popover from 'react-native-popover-view';
-import StarRating from 'react-native-star-rating';
+
+
  class getTaskers extends React.PureComponent {
 
     constructor(props){
@@ -100,17 +100,13 @@ renderSeparator=()=>{
         }}/>
     );
 }
-handleItemLongPressed=()=>{
-    
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-}
-handleItemPressed=()=>{
+
+handleItemPressed=(item)=>{
   
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    console.log('you pressed me and I am relaying the following',item)
+    this.props.navigation.navigate('UserDetails', {...item});
 }
-closePopover=()=>{
-    this.setState({isVisible:false})
-}
+
 
        renderHeader=()=>{
            return<SearchBar placeholder="Search user..." lightTheme round  
@@ -172,11 +168,9 @@ closePopover=()=>{
                            titleStyle={{fontWeight:'bold'}}
                            subtitle={item.location}
                             containerStyle={{borderBottomWidth:0}}
-                            onPress={this.handleItemPressed.bind(this) }
+                            onPress={()=>this.handleItemPressed(item) }
                            hideChevron
-                            onLongPress={this.handleItemLongPressed.bind(this)}
                            
-
                         />
                        
                        
@@ -197,68 +191,6 @@ closePopover=()=>{
                
                 </List> 
                 
-                <Modal 
-         
-             onBackdropPress={()=>this.setState({isModalVisible:false})}
-              style={styles.modal}
-             isVisible={this.state.isModalVisible}>
-          <View style={{ flex: 1,alignItems:'flex-end' }}>
-        
-          <ScrollView>
-                            
-                    <CardItem style={{height:200,width:100+'%'}}>
-                    <Image style={{width:120,height:100+'%',borderRadius:4}} source={require('../assets/images/Johnny.jpg')}/>
-                    <Right style={{flex:1,alignItems:'flex-start',height:200,padding:20}}>
-                        <Text style={{fontWeight:'bold',fontSize:16}}>Gtasker</Text>
-                        <Text>name: {this.props.fname }</Text>
-                        <Text style={{color:'gray'}}>location:{}</Text>
-
-                        <StarRating disabled={false} starSize={15} maxStars={5} rating={3} fullStarColor='#FFA500' emptyStarColor='#FFA500' />
-                        <Text style={{color:'gray',bottom:2,fontSize:14}}>3 / 5 </Text>
-                       
-                        
-                    </Right>
-                    </CardItem>
-                
-                    <View style={{alignItems:'flex-start',justifyContent:'flex-start',padding:10,paddingTop:5}}>
-
-                        <Text style={{fontWeight:'bold'}}>About me</Text>
-                        <Text>I am HardWorking Person who gets the job done efficiently and relieves you with nothing but satisfaction</Text>
-                       
-                    </View>
-          </ScrollView>
-  
-                    <View style={{width:width}}>
-                    <View style={{height:50,padding:5}}>
-             
-                     <Text style={{fontWeight:'bold',color:'red'}}></Text></View>
-                     
-                
-                    <View style={{width:250,height:50,padding:10,position:'absolute',right:0,alignItems:'flex-end'}}>
-                  
-                <Button style={{backgroundColor:'#b71540',color:'#ffffff',fontWeight:'bold'}} 
-                    color='#b71540'
-                     buttonStyle={{
-                      backgroundColor: "#b71540",
-                      width: 300,
-                      height: 45,
-                      borderColor: "transparent",
-                      borderWidth: 0,
-                      borderRadius: 5
-                    }}
-                    onPress={()=>{{alert('tasker booked')}
-                //{this.setState({isModalVisible:false})}
-                }}
-                    containerStyle={{ marginTop: 20 }}
-                    title='Book Me'/>
-
-                   </View>
-                  </View>
-
-          </View>
-        </Modal>
-          
-         
                </Swipeable>
                 );
             }      
