@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {ScrollView,View,Text,Button} from 'react-native';
+import {ScrollView,View,Text,Button,Alert} from 'react-native';
 import {Tile,List,ListItem} from 'react-native-elements';
 
 import StarRating from 'react-native-star-rating';

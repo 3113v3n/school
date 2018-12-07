@@ -3,7 +3,6 @@ import React,{Component}  from 'react';
 import {FlatList, StyleSheet,View,Text,
     ActivityIndicator
     ,RefreshControl ,
-    AsyncStorage,
     Image,
 
 } from 'react-native';
@@ -11,8 +10,6 @@ import {FlatList, StyleSheet,View,Text,
 import _ from 'lodash';
 import {SearchBar,List,ListItem} from "react-native-elements";
 const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
-
-
 
 //const numColumns=2;
  class JobLists extends Component {     //pure!
@@ -27,9 +24,6 @@ const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
              TasksFromServer: [],
              filterText:'',
              empty:false,
-           
-           idNumber:'32571242',//fetch nat id
-  
         }
       
         this.arrayholder=[] ;
@@ -39,8 +33,8 @@ const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
       
          isMounted= true ;
          if(isMounted=true){
-            this.getAllTasks().then(()=>{this.setState({refreshing:false});})
-           //this.refreshDataFromServer();
+           
+           this.refreshDataFromServer();
             
          }else{
              console.log('error mounting')
@@ -49,18 +43,15 @@ const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
     
  
     learnMore=(item)=>{
-        let idNumber=this.state.idNumber
-        console.log('you pressed me and I am relaying the following',idNumber)
-        this.props.navigation.navigate('Details', {...item},idNumber);
+       
+        console.log('you pressed me and I am relaying the following',item)
+        this.props.navigation.navigate('Details', {...item});// pass items to next screen
     }
     componentWillUnmount(){
     
     isMounted=false;
     }
-    getNatID=async ()=>{
-        myID= await AsyncStorage.getItem('NatID');
-        this.setState({idNumber:myID})
-      }
+    
 
     setSearchText=filterText=>{
        const newData1 = this.arrayholder.filter(item=>{
@@ -99,11 +90,10 @@ const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
     }
     refreshDataFromServer = _.debounce(() => {
         this.setState({ refreshing: true, });
-        this.getNatID().then(()=>{
-            this.getAllTasks().then(()=>{
+       
+        this.getAllTasks().then(()=>{
                 this.setState({refreshing:false});
             })
-        })
        
    },250);
      
