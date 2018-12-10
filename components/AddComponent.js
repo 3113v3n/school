@@ -95,9 +95,22 @@ var screen = Dimensions.get('window');
 
     }
     onSave(){
-      
-            
-
+        var data = this.state.PickerIndex;
+        if (this.state.newTaskDesc.length == 0 || this.state.newLocation.length == 0 ||
+        this.state.newAmount.length == 0 || this.state.chosenEndDate.length == 0){
+            alert("PLEASE FILL ALL FIELDS"); //no submision on empty fields
+        } else if (
+            data=="" && this.state.newTaskDesc.length != 0 && this.state.newLocation.length != 0 &&
+            this.state.newAmount.length != 0 && this.state.chosenEndDate.length != 0
+                
+        ){
+                alert("CLICK ON DROP DOWN AND SELECT SERVICE TYPE ");
+        } 
+        else if (
+            data!="" && this.state.newTaskDesc.length != 0 && this.state.newLocation.length != 0 &&
+            this.state.newAmount.length != 0 && this.state.chosenEndDate.length != 0
+                
+        ){ 
             let tasks={}
         tasks.userId=this.state.u_id,
         tasks.taskId=this.state.PickerIndex,
@@ -110,24 +123,15 @@ var screen = Dimensions.get('window');
        AddNewTask(tasks).then((status)=>{
             
                if(status==0){
-                //    this.setState({
-                //        u_id:'',
-                //        PickerIndex:[],
-                //        newLocation:'',
-                //        newAmount:'',
-                //        chosenStartDate:'',
-                //        chosenEndDate:''
-                //    })
+                  //clear Text field here
                 this.nav();
                }
            
-       }) 
-      
-
+       }) }
     }
    
     nav(){
-       this.props.navigation.navigate('back');
+       this.props.navigation.navigate('userscreen');
     }
     render(){
         setTimeout(()=>{
@@ -161,7 +165,7 @@ var screen = Dimensions.get('window');
                         onValueChange={(ItemValue,itemIndex)=>
                             this.setState({PickerValue:ItemValue, PickerIndex:itemIndex})}
                         >
-                        <Picker.Item label="Select your Task Type" value="" />
+                        <Picker.Item label="SELECT SERVICE TYPE ==>" value="" />
                         <Picker.Item label ='Laundry' value='laundry'/>
                         <Picker.Item label ='Delivery' value='delivery'/>
                         <Picker.Item label ='Movers' value='movers'/>
@@ -172,6 +176,7 @@ var screen = Dimensions.get('window');
                    
 
                 <TextInput style={styles.inputBox}
+                autoCorrect={false}
                 underlineColorAndroid='transparent'
                onSubmitEditing={()=>this._location.focus()}
                 keyboardType="email-address"
@@ -188,7 +193,7 @@ var screen = Dimensions.get('window');
                 />
               
               <TextInput style={styles.inputBox}
-
+                autoCorrect={false}
                 underlineColorAndroid='transparent'
                 onSubmitEditing={()=>this.amount.focus()}
                 keyboardType="email-address"
@@ -207,7 +212,7 @@ var screen = Dimensions.get('window');
               <TextInput style={styles.inputBox}
 
                 underliclearButtonMode='while-editing'neColorAndroid='transparent'
-                
+                autoCorrect={false}
                 keyboardType="email-address"
                 placeholder=" *Amount:"
                 ref={(input)=>this.amount=input}

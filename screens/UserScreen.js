@@ -23,7 +23,7 @@ export default class HomeScreen extends React.Component {
       placeholderText:'Enter phone number',
       mob:'',
       username:'',
-      id:''
+      id:'23'
     }
 }
 
@@ -97,7 +97,7 @@ submitUsers(){
     registerUsers(user).then((userId)=>{
      let user_id = userId;
      this.storeID(user_id);
-     console.log('your id returned ' +user_id+ 'from database');
+     console.log('your id returned ' + user_id+ 'from database');
      this.props.navigation.navigate('UserScreen',{id:user_id});
   })
   .catch(()=>{
@@ -109,7 +109,7 @@ submitUsers(){
 //     this.storeID(user_id);
 //     console.log('your new id is ===' +user_id);
 //     this.props.navigation.navigate('UserScreen',{id:user_id});
- }
+}
 }
 submitGtasker(){
   let user={}

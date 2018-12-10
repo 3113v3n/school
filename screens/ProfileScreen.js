@@ -61,7 +61,7 @@ count(){
 
  nav=()=>{
         
-  this.props.navigation.navigate('login');
+  this.props.navigation.navigate(' login');
 }
  
   getID=async ()=>{

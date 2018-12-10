@@ -7,7 +7,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import getTaskers from '../screens/getTaskers';
 import { createStackNavigator} from 'react-navigation';
 import UserDetails from '../screens/UserDetails';
-
+import UserTaskHistory from '../screens/UserTaskHistory';
 export const userFeedStack = createStackNavigator({
 
 feed:{
@@ -20,6 +20,15 @@ UserDetails:{
         title:'Tasker Details'
     }
 },
+})
+export const HomeFeedStack = createStackNavigator({
+home:HomeScreen,
+session:{
+    screen:UserTaskHistory,
+    navigationOptions:{
+        title:'My History'
+    }
+}
 })
  
 export default UserBottomTab = new createMaterialBottomTabNavigator({
@@ -51,7 +60,7 @@ export default UserBottomTab = new createMaterialBottomTabNavigator({
             }
     },
     HomeScreen:{
-        screen: HomeScreen,
+        screen: HomeFeedStack,
         navigationOptions:{
             tabBarLabel: 'Home',
             tabBarIcon: ({ focused }) => (

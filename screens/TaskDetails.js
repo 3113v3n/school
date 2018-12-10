@@ -13,7 +13,13 @@ class TaskDetails extends Component{
     return(
         <ScrollView>
             <Tile
-            imageSrc={require('../assets/images/Johnny.jpg')}
+            imageSrc={ 
+            task_name==='general cleaning' ? require('../assets/images/home_cleaning.jpg'):
+             task_name ==='delivery'? require('../assets/images/deliveryServices.jpg'):
+            task_name==='baby sitting' ? require('../assets/images/baby.jpg'):
+            task_name==='laundry' ? require('../assets/images/laundryIcon.jpg'):
+            task_name==='movers' ? require('../assets/images/moving.jpeg'):
+            require('../assets/images/Plumbing.jpg')} 
             featured
             title={`${task_name.toUpperCase()}`}
             caption={location}

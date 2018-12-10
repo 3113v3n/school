@@ -13,12 +13,12 @@ import getTaskers from '../screens/getTaskers'
 
 const RootNavigator = createSwitchNavigator({
 //qjobs: getTaskers //ClockTimer
-  AuthLoading: AuthLoadingScreen,
-  Auth: AuthStackNavigator,
+ AuthLoading: AuthLoadingScreen,
+ Auth: AuthStackNavigator,
  
-   UserScreen: UserBottomTab,
-   GtaskerScreen: GtaskerBottomTab,
-   Main: MainTabNavigator,
+  //  UserScreen: UserBottomTab,
+  //  GtaskerScreen: GtaskerBottomTab,
+  //  Main: MainTabNavigator,
   //https://www.youtube.com/watch?v=rmOpBg5W1RU props
   //https://www.youtube.com/watch?v=C96piR3FRww
 });

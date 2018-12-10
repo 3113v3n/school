@@ -8,6 +8,7 @@ import { Image,
    import {getTaskHistory} from '../networking/server';
    
     export default class taskHistory extends Component{
+        
         constructor(props){
             super(props)
             this.state={
@@ -136,14 +137,7 @@ import { Image,
                 return (
                     
                 <List containerStyle={{borderTopWidth:0, borderBottomWidth:0}}>
-                    <Animated.View style={styles.animate}>
-                <TouchableOpacity  >
-                            <Icon name="md-arrow-back"
-                            style={{color:'#353662', }}
-                            onPress={()=>this.props.navigation.navigate('back')}
-                            />
-                </TouchableOpacity>
-                </Animated.View>
+                   
                     <FlatList
                     data={this.state.myPost}
                     renderItem={({item, index})=>(
