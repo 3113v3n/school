@@ -185,9 +185,7 @@ import { Image,
                             containerStyle={{borderBottomWidth:0}}
                              hideChevron
                              buttonGroup
-                             
-                           
-
+                        
                         />
                    
                     )}

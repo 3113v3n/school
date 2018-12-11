@@ -7,14 +7,13 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import AuthStackNavigator from '../screens/AuthStackNavigator'
 import UserBottomTab from './UserBottomTab';
 import GtaskerBottomTab from './GtaskerBottomTab';
+import Maps from '../components/AppComponents/Maps';
 
-import JobLists from '../screens/JobLists';
-import getTaskers from '../screens/getTaskers'
 
 const RootNavigator = createSwitchNavigator({
-//qjobs: getTaskers //ClockTimer
- AuthLoading: AuthLoadingScreen,
- Auth: AuthStackNavigator,
+jobs: Maps //ClockTimer
+ //AuthLoading: AuthLoadingScreen,
+ //Auth: AuthStackNavigator,
  
   //  UserScreen: UserBottomTab,
   //  GtaskerScreen: GtaskerBottomTab,
