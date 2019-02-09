@@ -15,7 +15,7 @@ Login
 During login you are required to sign in as either a service worker (Freelancer)
 or a client
 
-![](login.jpeg)
+![](media/f87d959ab9d61b77b07e95d171e6f326.jpg)
 
 **CLIENT: (** This is for those who need certain tasks done for them**)**
 
