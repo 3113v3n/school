@@ -34,23 +34,26 @@ var screen = Dimensions.get('window');
           end_date:"",
           PickerIndex:[],
           isVisible:false,
-          chosenStartDate:moment().format("LLL"),//YYYY-MMMM-Do HH:mm
+          chosenStartDate:moment().format("YYYY-MM-DD hh:mm:ss"),//YYYY-MMMM-Do HH:mm
           chosenEndDate:''
           
          
         }
     }
     componentWillMount(){
-        this.fetchID = this.getID(); //_-REMOVE
+        this.fetchID = true;
+        if(this.fetchID){
+            this.subscribeToID =this.getID();
+        } //_-REMOVE
     }
     componentWillUnmount(){
-        this.fetchID
+        this.fetchID = false
     }
 
     _handleEndDatePicked=(datetime)=>{
         this.setState({
             isVisible:false,
-            chosenEndDate:moment(datetime).format('LLL')
+            chosenEndDate:moment(datetime).format('YYYY-MM-DD hh:mm:ss')
         })
     }
     _showPicker=()=>{
@@ -131,12 +134,13 @@ var screen = Dimensions.get('window');
     }
    
     nav(){
+        this.componentWillUnmount()
        this.props.navigation.navigate('userscreen');
     }
     render(){
         setTimeout(()=>{
             this.setState({
-                chosenStartDate:moment().format("LLL"),
+                chosenStartDate:moment().format("YYYY-MM-DD hh:mm:ss"),
             
             })
         },1000)

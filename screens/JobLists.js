@@ -204,7 +204,7 @@ renderSeparator=()=>{
                            
                         )}
                         
-                        keyExtractor={(item) => item.location}
+                        keyExtractor={(item) => item.description}
                         refreshControl={
                             <RefreshControl
                                 refreshing={this.state.refreshing}       

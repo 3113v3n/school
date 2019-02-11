@@ -3,7 +3,7 @@ import React from 'react';
 import { 
      FlatList,StyleSheet,View,Text,ActivityIndicator,RefreshControl,
     Image,ScrollView,Dimensions,Button } from 'react-native';
-import Modal from "react-native-modal";
+
 import _ from 'lodash';
 import {SearchBar,List,ListItem} from "react-native-elements";
 

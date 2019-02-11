@@ -7,17 +7,15 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import AuthStackNavigator from '../screens/AuthStackNavigator'
 import UserBottomTab from './UserBottomTab';
 import GtaskerBottomTab from './GtaskerBottomTab';
-import Maps from '../components/AppComponents/Maps';
+import CountdownTimer from '../components/AppComponents/CountdownTimer';
 
 
 const RootNavigator = createSwitchNavigator({
-jobs: Maps //ClockTimer
- //AuthLoading: AuthLoadingScreen,
- //Auth: AuthStackNavigator,
+ // CountdownTimer
  
-  //  UserScreen: UserBottomTab,
-  //  GtaskerScreen: GtaskerBottomTab,
-  //  Main: MainTabNavigator,
+ AuthLoading: AuthLoadingScreen,
+ Auth: AuthStackNavigator,
+ 
   //https://www.youtube.com/watch?v=rmOpBg5W1RU props
   //https://www.youtube.com/watch?v=C96piR3FRww
 });

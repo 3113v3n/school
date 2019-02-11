@@ -5,7 +5,7 @@ import { StyleSheet
    Image,
 AsyncStorage,Button} from 'react-native';
 import {Icon} from 'native-base';
-
+import {ImagePicker } from 'expo';
 import TabBarIcon from '../components/TabBarIcon';
 import {getUsername} from '../networking/server';
 import {userPostCount} from '../networking/server';
@@ -20,7 +20,8 @@ export default class ProfileScreen extends React.Component {
     this.state={
       uname:'',
       u_id:'',
-      count:''
+      count:'',
+      image:null
     }
   }
   componentWillMount(){
@@ -33,6 +34,30 @@ componentWillUnmount(){
 
 
 }
+uploadPhoto=async ()=>{
+ 
+    const { Permissions } = Expo;
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      alert('Hey! You might want to allow permissions to access camera');
+    }else{
+      
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+      //ToDo: Handle promise
+      console.log(result);
+      if (!result.cancelled) {
+        this.setState({
+          image: result.uri
+        });
+        alert('Upload Successful')
+      }
+    }
+  
+
+};
 count(){
   this.getID().then((ID)=>{
     let user={}
@@ -61,7 +86,7 @@ count(){
 
  nav=()=>{
         
-  this.props.navigation.navigate(' login');
+  this.props.navigation.navigate(' AuthLoading');
 }
  
   getID=async ()=>{
@@ -95,18 +120,26 @@ count(){
   
   }
   render() {
-  
+  let {image}=this.state;
     return (
       <View style={styles.container}>
 
       <View style={styles.top}>
-
+      <View style={styles.upload}>
         <View style={styles.profileimage}>
-        <Image
-        style={styles.image}
-        source={require('../assets/images/if_Account_Audience_person_customer_profile_user_1886036.png')}//if_user_5_6712 
-        
+       
+         {image && 
+            <Image source={{uri:image}} style={styles.image}/>}
+        </View>
+        <TouchableOpacity onPress={()=>this.uploadPhoto()}>
+        < TabBarIcon
+        name = 'md-camera'
+        color = {
+          '#ffd700'
+        }
+
         />
+        </TouchableOpacity>
         </View>
         <Text style={styles.uname}>{this.state.uname}</Text>
         <Text style={styles.pos}>User</Text>
@@ -143,11 +176,11 @@ count(){
        
         </View>
         <View style={styles.button}>
-       
         <Button
         title='DELETE ACCOUNT'
         onPress={()=>this.SignMeOut()}
         />
+       
         </View>
        
 
@@ -163,6 +196,8 @@ const styles = StyleSheet.create({
    // backgroundColor:'lightgray'
     
     
+  }, upload:{
+    flexDirection:'row'
   },
   button:{
     flex:1,

@@ -3,13 +3,17 @@ import {ScrollView,View,Text,Button,StyleSheet,Alert,AsyncStorage} from 'react-n
 import {Tile,List,ListItem} from 'react-native-elements';
 import {_claimTask} from '../networking/server';
 import ClockTimer from '../components/AppComponents/ClockTimer'
+import CountdownTimer from '../components/AppComponents/CountdownTimer'
 class TaskDetails extends Component{
+    
     getNatID=async ()=>{
         myID= await AsyncStorage.getItem('NatID');
         return myID
       }
+     
     render(){
         const{task_name,description,amount,location,post_id,end_date}=this.props.navigation.state.params;
+        
     return(
         <ScrollView>
             <Tile
@@ -25,21 +29,25 @@ class TaskDetails extends Component{
             caption={location}
             />
             <List>
-                <ListItem
+            <ListItem
                 title="Time Remaining"
-                rightTitle={<ClockTimer deadline={end_date}/>}//display timer
+                subtitle={ 
+                      <CountdownTimer  deadline={end_date}/> //change dateTime format in ADd Component and Db
+                    }//display timer
+                subtitleStyle={{fontWeight:'bold',paddingLeft: '85%',}}
                 hideChevron
                 />
+               
                 <ListItem
                 title={"Amount"}
-                rightTitle={amount}
-                rightTitleStyle={{fontWeight:'bold'}}
+                rightTitle={amount.toString()}//only accepts strings
+                subtitleStyle={{fontWeight:'bold',paddingLeft: '85%',}}
                 hideChevron
                 />
 
                 <ListItem
                 title={"description"}
-               titleStyle={{fontWeight:'bold'}}
+               titleStyle={{fontWeight:'bold',paddingLeft: 10,}}
                subtitle={
                    <View style={styles.subtitleView}>
                       <Text>{description}</Text> 

@@ -5,7 +5,7 @@ import { StyleSheet
    Image,
 AsyncStorage,Button} from 'react-native';
 import {Icon} from 'native-base';
-
+import {ImagePicker} from 'expo';
 import TabBarIcon from '../components/TabBarIcon';
 import {getUsername} from '../networking/server';
 import{taskerClaimCount} from '../networking/server';
@@ -20,16 +20,20 @@ export default class ProfileScreen extends React.Component {
     this.state={
       uname:'',
       u_id:'',
-      count:''
+      count:'',
+      image:null
     }
   }
   componentDidMount(){
-    this.subscribeToUsername = this.uname();
-    this.subscribeToCount = this.count();
+    this.mounted=true;
+    if(this.mounted){
+      this.subscribeToUsername = this.uname();
+      this.subscribeToCount = this.count();
+    }
+    
   }
 componentWillUnmount(){
-  this._subscribeToUsername
-  this._subscribeToCount
+  this.mounted=false;
 }
 
  SignMeOut = async()=>{
@@ -46,7 +50,7 @@ componentWillUnmount(){
 
  nav=()=>{
         
-  this.props.navigation.navigate(' login');
+  this.props.navigation.navigate(' AuthLoading');
 }
  
   getTaskerID=async ()=>{
@@ -71,7 +75,28 @@ componentWillUnmount(){
     })
   }
 
-
+uploadPhoto=async()=>{
+  const { Permissions, Camera } = Expo;
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      alert('Hey! You might want to allow permissions to access camera');
+    }else{
+      
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+      
+      //ToDo: Handle promise
+      console.log(result);
+      if (!result.cancelled) {
+        this.setState({
+          image: result.uri
+        });
+        alert('Upload Successful')
+      }
+}
+}
   uname=()=>{
     //GTASKER USERNAME
     this.getTaskerID().then((ID)=>{
@@ -94,18 +119,25 @@ componentWillUnmount(){
   
   }
   render() {
-  
+    let {image}=this.state;
     return (
       <View style={styles.container}>
 
       <View style={styles.top}>
-
+      <View style={styles.upload}>
         <View style={styles.profileimage}>
-        <Image
-        style={styles.image}
-        source={require('../assets/images/if_Account_Audience_person_customer_profile_user_1886036.png')}//if_user_5_6712 
-        
+        {image && 
+            <Image source={{uri:image}} style={styles.image}/>}
+        </View>
+        <TouchableOpacity onPress={()=>this.uploadPhoto()}>
+        < TabBarIcon
+        name = 'md-camera'
+        color = {
+          '#ffd700'
+        }
+
         />
+        </TouchableOpacity>
         </View>
         <Text style={styles.uname}> {this.state.uname} </Text>
         <Text style={styles.pos}>Tasker</Text>
@@ -160,6 +192,9 @@ const styles = StyleSheet.create({
    // backgroundColor:'lightgray'
     
     
+  },
+  upload:{
+    flexDirection:'row'
   },
   button:{
     flex:1,

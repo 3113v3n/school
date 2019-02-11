@@ -60,7 +60,7 @@ class DaysTimer extends Component{
             hours:0,
             minutes:0,
             seconds:0,
-           // deadline:'December 19, 2018',
+           // deadline:'January 31, 2019',
         }
       //  console.log(this.props);
     }
@@ -96,7 +96,7 @@ class DaysTimer extends Component{
         this.setState({days,hours,minutes,seconds})
     }
     render(){
-        //this.getTimeUntil(this.state.deadline)//props
+       // this.getTimeUntil(this.state.deadline)//props
         return(
             <View style={styles.container}>
              <Text style={styles.dateText}>{this.state.deadline}</Text>
@@ -105,22 +105,22 @@ class DaysTimer extends Component{
 
             <View style={{flexDirection:'column'}}>
             <Text style={styles.timeText}>{this.leading0(this.state.days)} </Text>
-            <Text style={styles.timeText}> days</Text>
+            <Text style={styles.timeText}> DD</Text>
             </View>
 
             <View style={{flexDirection:'column'}}>
             <Text style={styles.timeText}>{this.leading0(this.state.hours)} </Text>
-            <Text style={styles.timeText}> hours</Text>
+            <Text style={styles.timeText}> HH</Text>
             </View>
 
             <View style={{flexDirection:'column'}}>
             <Text style={styles.timeText}>{this.leading0(this.state.minutes)} </Text>
-            <Text style={styles.timeText}> minutes</Text>
+            <Text style={styles.timeText}> Min</Text>
             </View>
 
             <View style={{flexDirection:'column'}}>
             <Text style={styles.timeText}>{this.leading0(this.state.seconds)} </Text>
-            <Text style={styles.timeText}> seconds</Text>
+            <Text style={styles.timeText}> Sec</Text>
             </View>
            
             </View>  
@@ -144,12 +144,12 @@ container:{
 },
 timeText:{
     color:'#000',//'#999999',
-    fontsize:80,
-    padding:5
+    fontSize:15,
+    padding:4
 },
 dateText:{
     color:'#000',//'#999999',
-    fontsize:80
+    fontSize:8
 },
 })
 

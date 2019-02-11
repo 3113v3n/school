@@ -11,7 +11,10 @@ import UserTaskHistory from '../screens/UserTaskHistory';
 export const userFeedStack = createStackNavigator({
 
 feed:{
-    screen:getTaskers
+    screen:getTaskers,
+    navigationOptions:{
+        header:null
+    }
   
 },
 UserDetails:{
@@ -22,7 +25,10 @@ UserDetails:{
 },
 })
 export const HomeFeedStack = createStackNavigator({
-home:HomeScreen,
+home:{screen:HomeScreen,
+navigationOptions:{
+    header:null,
+}},
 session:{
     screen:UserTaskHistory,
     navigationOptions:{
@@ -63,6 +69,7 @@ export default UserBottomTab = new createMaterialBottomTabNavigator({
         screen: HomeFeedStack,
         navigationOptions:{
             tabBarLabel: 'Home',
+           
             tabBarIcon: ({ focused }) => (
               <TabBarIcon
                 focused={focused}

@@ -11,6 +11,9 @@ import TaskDetails from '../screens/TaskDetails';
 export const feedStack= createStackNavigator({
   Feed:{
     screen:JobLists,
+      navigationOptions:{
+        header:null
+      }
 
   },
   Details:{
@@ -19,6 +22,7 @@ export const feedStack= createStackNavigator({
     title:'details'//({state})=>`${state.params.task_name.toUpperCase()}`
   }
 }
+
 })
 
 export default GtaskerTabNavigator = new createMaterialBottomTabNavigator({

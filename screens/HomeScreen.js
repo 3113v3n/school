@@ -41,7 +41,7 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.bottomItem}>
                     
                     <View style={styles.bottomItemInner}>
-                    <Text  style={{color:'#F95B57'}}> Session
+                    <Text  style={{color:'#F95B57'}}> History
                     </Text>
                     <TouchableOpacity>
                     <Icon 
