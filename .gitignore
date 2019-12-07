@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+
 node_modules/**/*
 .expo/**/*
 =======
 vendor
 composer.lock
->>>>>>> 349127926bf8709d824c31976d9f55eb404b5320
+

@@ -19,7 +19,7 @@ export const feedStack= createStackNavigator({
     title:'details'//({state})=>`${state.params.task_name.toUpperCase()}`
   }
 }
-})
+});
 
 export default GtaskerTabNavigator = new createMaterialBottomTabNavigator({
     HomeScreen:{

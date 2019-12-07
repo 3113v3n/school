@@ -24,14 +24,14 @@ const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
              TasksFromServer: [],
              filterText:'',
              empty:false,
-        }
+        };
       
         this.arrayholder=[] ;
     } 
   
     componentDidMount(){
       
-         isMounted= true ;
+        let isMounted= true ;
          if(isMounted=true){
            
            this.refreshDataFromServer();
@@ -46,10 +46,10 @@ const apiGet_All_Task='https://gawatask-app.herokuapp.com/all-posts.php';
        
         console.log('you pressed me and I am relaying the following',item)
         this.props.navigation.navigate('Details', {...item});// pass items to next screen
-    }
+    };
     componentWillUnmount(){
     
-    isMounted=false;
+   let isMounted=false;
     }
     
 
